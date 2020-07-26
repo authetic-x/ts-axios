@@ -24,8 +24,7 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /^\.ts$/,
-				enfore: 'pre',
+				test: /\.ts$/,
 				use: [
 					{
 						loader: 'tslint-loader'
@@ -33,7 +32,7 @@ module.exports = {
 				]
 			},
 			{
-				test: /^\.tsx?$/,
+				test: /\.tsx?$/,
 				use: [
 					{
 						loader: 'ts-loader',
@@ -52,6 +51,5 @@ module.exports = {
 
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoEmitOnErrorsPlugin()
 	]
 }
