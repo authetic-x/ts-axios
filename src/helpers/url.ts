@@ -1,6 +1,6 @@
 import {
 	isDate,
-	isObject
+	isPlainObject
 } from './utils'
 
 function encode(val: string): string {
@@ -41,7 +41,7 @@ export function buildURL(url: string, params?: any): string {
 		values.forEach(v => {
 			if (isDate(v)) {
 				v = v.toISOString();
-			} else if (isObject(v)) {
+			} else if (isPlainObject(v)) {
 				v = JSON.stringify(v);
 			}
 			// 对部分字符编码

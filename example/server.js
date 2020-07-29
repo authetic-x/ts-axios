@@ -47,4 +47,22 @@ function registerBaseRouter() {
 	router.get('/base/get', (req, res) => {
 		res.json(req.query)
 	})
+
+	router.post('/base/post', (req, res) => {
+		res.json(req.body);
+	})
+
+	router.post('/base/buffer', (req, res) => {
+		let data = [];
+		req.on('data', chunk => {
+			if (chunk) {
+				data.push(chunk)
+			}
+		})
+
+		req.on('end', () => {
+			let buf = Buffer.concat(data)
+			res.json(buf.toJSON());
+		})
+	})
 }
