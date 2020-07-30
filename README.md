@@ -17,8 +17,8 @@ npm run dev
 
 ### TODO
 
-- [ ] 在浏览器端使用 XMLHttpRequest 对象通讯
-- [ ] 支持 Promise API
+- [X] 在浏览器端使用 XMLHttpRequest 对象通讯
+- [X] 支持 Promise API
 - [ ] 支持请求和响应的拦截器
 - [ ] 支持请求的取消
 - [ ] JSON 数据的自动转换
