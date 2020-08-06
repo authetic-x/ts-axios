@@ -30,6 +30,7 @@ const router = express.Router()
 registerSimpleRouter()
 registerBaseRouter()
 registerErrorRouter()
+registerExtendRouter()
 
 app.use(router)
 
@@ -86,5 +87,15 @@ function registerErrorRouter() {
 				msg: 'Hello'
 			})
 		}, 3000);
+	})
+}
+
+function registerExtendRouter() {
+	router.get('/extend/get', (req, res) => {
+		res.end('you got me!')
+	})
+
+	router.post('/extend/post', (req, res) => {
+		res.json(req.body)
 	})
 }
