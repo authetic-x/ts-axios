@@ -31,6 +31,7 @@ registerSimpleRouter()
 registerBaseRouter()
 registerErrorRouter()
 registerExtendRouter()
+registerInterceptorRouter()
 
 app.use(router)
 
@@ -97,5 +98,11 @@ function registerExtendRouter() {
 
 	router.post('/extend/post', (req, res) => {
 		res.json(req.body)
+	})
+}
+
+function registerInterceptorRouter() {
+	router.get('/interceptor/get', (req, res) => {
+		res.end('Interceptor works fine!');
 	})
 }

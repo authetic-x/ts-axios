@@ -1,3 +1,5 @@
+import InterceptorManager from '../core/InterceptorManager'
+
 export type Method = 'get' | 'GET'
 	| 'post' | 'POST' | 'put' | 'PUT'
 	| 'delete' | 'DELETE' | 'options'
@@ -36,6 +38,11 @@ export interface AxiosError extends Error {
 }
 
 export interface Axios {
+	interceptors: {
+		request: InterceptorManager<AxiosRequestConfig>
+		response: InterceptorManager<AxiosResponse>
+	}
+
 	request<T=any>(config: AxiosRequestConfig): AxiosPromise<T>
 
 	get<T=any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
@@ -60,9 +67,15 @@ export interface AxiosInstance extends Axios {
 }
 
 export interface AxiosInterceptorManager<T> {
-	// use(resolve, reject)
+	use(resolve: ResolveFn<T>, reject?: RejectFn): number
+
+	eject(id: number): void
 }
 
 export interface ResolveFn<T> {
 	(val: T): T | Promise<T>
+}
+
+export interface RejectFn {
+	(error: any): any
 }
