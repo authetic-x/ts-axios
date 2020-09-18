@@ -4,7 +4,6 @@ import {
 } from '../types'
 import dispatchRequest from './dispatchRequest'
 import InterceptorManager from './InterceptorManager'
-import { extend } from '../helpers/utils'
 import mergeConfig from './mergeConfig'
 
 interface Interceptor {
@@ -47,7 +46,7 @@ export default class Axios {
 		}];
 
 		this.interceptors.request.forEach(interceptor => {
-			chain.push(interceptor)
+			chain.unshift(interceptor)
 		})
 
 		this.interceptors.response.forEach(interceptor => {
