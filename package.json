@@ -19,7 +19,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-		"dev": "node example/server.js",
+    "dev": "node example/server.js",
     "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
@@ -126,5 +126,9 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0"
+  },
+  "dependencies": {
+    "@types/qs": "^6.9.5",
+    "qs": "^6.9.4"
   }
 }

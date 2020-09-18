@@ -1,8 +1,9 @@
 import {AxiosRequestConfig, AxiosPromise, AxiosResponse} from '../types'
 import {buildURL} from '../helpers/url'
 import {transformRequest, transformResponse} from '../helpers/data'
-import {processHeaders} from '../helpers/headers';
+import { processHeaders, flattenHeaders } from '../helpers/headers';
 import xhr from '../xhr'
+import transform from './transform';
 
 export default function dispatchRequest(config: AxiosRequestConfig): AxiosPromise {
 	processConfig(config);
@@ -14,8 +15,8 @@ export default function dispatchRequest(config: AxiosRequestConfig): AxiosPromis
 // 处理传入axios的参数
 function processConfig(config: AxiosRequestConfig): void {
 	config.url = transformURL(config);
-	config.headers = transformHeaders(config);
-	config.data = transformRequestData(config);
+	const data = transform(config.data, config.headers, config.transformRequest);
+  config.headers = flattenHeaders(config.headers, config.method!);
 }
 
 // 拼接url查询参数
@@ -29,14 +30,14 @@ function transformURL(config: AxiosRequestConfig): string {
 function transformRequestData(config: AxiosRequestConfig): any {
 	return transformRequest(config.data)
 }
-
+/* 
 // 处理headers
 function transformHeaders(config: AxiosRequestConfig): any {
 	const {headers={}, data} = config;
 	return processHeaders(headers, data);
-}
+} */
 
 function transformResponseData(res: AxiosResponse): AxiosResponse {
-	res.data = transformResponse(res.data);
+  res.data = transform(res.data, res.headers, res.config.transformResponse);
 	return res;
 }
