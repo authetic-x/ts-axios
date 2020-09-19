@@ -3,6 +3,7 @@ import {parseHeaders} from './helpers/headers';
 import {createError} from './helpers/error';
 import { isFormData, isPlainObject } from './helpers/utils';
 import { isURLSameOrigin } from './helpers/url';
+import cookie from './helpers/cookie';
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {

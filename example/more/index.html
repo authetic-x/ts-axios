@@ -3,8 +3,32 @@
   <head>
     <meta charset="utf-8">
     <title>Simple example</title>
+    <style>
+      #download-btn, #upload-btn {
+        border: 0;
+        outline: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        background-color: skyblue;
+        font-size: 14px;
+        color: #fff;
+      }
+
+      #upload-form {
+        margin-top: 30px;
+      }
+    </style>
   </head>
   <body>
+    <button id="download-btn">
+      Download
+    </button>
+
+    <form id="upload-form">
+      <input id="upload-input" type="file">
+      <button id="upload-btn" type="submit">Upload</button>
+    </form>
+
     <script src="/__build__/more.js"></script>
   </body>
 </html>

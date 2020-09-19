@@ -4,3 +4,5 @@ const cookie = {
     return match ? decodeURIComponent(match[3]) : null;
   }
 }
+
+export default cookie;

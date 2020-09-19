@@ -1,10 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser');
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const webpackConfig = require('./webpack.config')
-const server2 = require('./server2');
+
+require('./server2');
 
 const app = new express()
 const compiler = webpack(webpackConfig)
@@ -30,6 +32,8 @@ app.use(bodyParser.json())
 // 不知道干啥的
 app.use(bodyParser.urlencoded({extended: true}))
 
+app.use(cookieParser());
+
 const router = express.Router()
 
 registerSimpleRouter()
@@ -43,7 +47,7 @@ registerMoreRouter();
 
 app.use(router)
 
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 8000
 module.exports = app.listen(port, () => console.log('Server listening on localhost:8080'))
 
 function registerSimpleRouter() {
@@ -137,6 +141,12 @@ function registerCancelRouter() {
 
 function registerMoreRouter() {
   router.get('/more/get', (req, res) => {
-    res.end('More get!');
+    res.json(req.cookies);
+    res.end();
   })
+
+  router.post('/more/upload', (req, res) => {
+    console.log(req.body, req.files);
+    res.end('Upload success');
+  });
 }
