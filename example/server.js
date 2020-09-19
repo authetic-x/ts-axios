@@ -4,6 +4,7 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const webpackConfig = require('./webpack.config')
+const server2 = require('./server2');
 
 const app = new express()
 const compiler = webpack(webpackConfig)
@@ -18,7 +19,11 @@ app.use(webpackDevMiddleware(compiler, {
 
 app.use(webpackHotMiddleware(compiler))
 
-app.use(express.static(__dirname))
+app.use(express.static(__dirname, {
+  setHeaders (res) {
+    res.cookie('CSRF-TOKEN-D', 'test-cookie');
+  }
+}))
 
 app.use(bodyParser.json())
 
@@ -34,6 +39,7 @@ registerExtendRouter()
 registerInterceptorRouter()
 registerConfigRouter();
 registerCancelRouter();
+registerMoreRouter();
 
 app.use(router)
 
@@ -127,4 +133,10 @@ function registerCancelRouter() {
       res.end('Post!');
     }, 1000);
   });
+}
+
+function registerMoreRouter() {
+  router.get('/more/get', (req, res) => {
+    res.end('More get!');
+  })
 }

@@ -2,7 +2,7 @@ import {
 	AxiosPromise, AxiosRequestConfig, AxiosResponse, 
 	Method, ResolveFn, RejectFn
 } from '../types'
-import dispatchRequest from './dispatchRequest'
+import dispatchRequest, { transformURL } from './dispatchRequest'
 import InterceptorManager from './InterceptorManager'
 import mergeConfig from './mergeConfig'
 
@@ -61,7 +61,12 @@ export default class Axios {
 		}
 
 		return promise;
-	}
+  }
+  
+  getUri(config?: AxiosRequestConfig): string {
+    config = mergeConfig(this.defaults, config);
+    return transformURL(config);
+  }
 
 	get<T=any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T> {
 		return this._requestWithoutData('get', url, config);

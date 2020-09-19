@@ -1,5 +1,5 @@
 import {AxiosRequestConfig, AxiosPromise, AxiosResponse} from '../types'
-import {buildURL} from '../helpers/url'
+import {buildURL, combineURL, isAbsoluteURL} from '../helpers/url'
 import {transformRequest, transformResponse} from '../helpers/data'
 import { processHeaders, flattenHeaders } from '../helpers/headers';
 import xhr from '../xhr'
@@ -21,10 +21,13 @@ function processConfig(config: AxiosRequestConfig): void {
 }
 
 // 拼接url查询参数
-function transformURL(config: AxiosRequestConfig): string {
-	const {url, params} = config;
+export function transformURL(config: AxiosRequestConfig): string {
+  let { url, params, paramsSerializer, baseURL } = config;
+  if (baseURL && !isAbsoluteURL(url!)) {
+    url = combineURL(baseURL, url);
+  }
 	// 断言url不为undefined
-	return buildURL(url!, params);
+	return buildURL(url!, params, paramsSerializer);
 }
 
 // 处理data类型

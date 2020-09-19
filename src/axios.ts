@@ -23,6 +23,14 @@ const axios = createInstance(defaults);
 axios.create = function create(config){
   return createInstance(mergeConfig(defaults, config));
 }
+axios.all = function all(promises) {
+  return Promise.all(promises);
+}
+axios.spread = function spread(callback) {
+  return function resolveFn(arr) {
+    return callback.apply(null, arr);
+  }
+}
 
 axios.CancelToken = CancelToken;
 axios.Cancel = Cancel;

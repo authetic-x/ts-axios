@@ -10,6 +10,11 @@ const defaults: AxiosRequestConfig = {
       Accept: 'application/json, text/plain, */*',
     }
   },
+  csrfCookieName: 'CSRF-TOKEN',
+  csrfHeaderName: 'X-CSRF-TOKEN',
+  validateStatus(status: number) {
+    return status >= 200 && status < 300;
+  },
   transformRequest: [
     function(data: any, headers: any) {
       processHeaders(headers, data);
