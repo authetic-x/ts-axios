@@ -4,10 +4,10 @@ import {
   isURLSearchParams
 } from './utils'
 
-function encode(val: string): string {
+export function encode(val: string): string {
 	return encodeURIComponent(val)
 		.replace(/%40/g, '@')
-		.replace(/%3!A/ig, ':')
+		.replace(/%3A/ig, ':')
 		.replace(/%24/g, '$')
 		.replace(/%2C/ig, ',')
 		.replace(/%20/g, '+')
