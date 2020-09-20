@@ -1,10 +1,13 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
+const multipart = require('connect-multiparty');
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
-const webpackConfig = require('./webpack.config')
+const webpackConfig = require('./webpack.config');
+const path = require('path');
+const atob = require('atob');
 
 require('./server2');
 
@@ -33,6 +36,10 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
 app.use(cookieParser());
+
+app.use(multipart({
+  uploadDir: path.resolve(__dirname, 'upload-file')
+}));
 
 const router = express.Router()
 
@@ -149,4 +156,25 @@ function registerMoreRouter() {
     console.log(req.body, req.files);
     res.end('Upload success');
   });
+
+  router.post('/more/post', (req, res) => {
+    const auth = req.headers.authorization;
+    const [type, credentials] = auth.split(' ');
+    console.log(atob(credentials));
+    const [username, password] = atob(credentials).split(':');
+    if (username === 'Ethan' && password === '123456') {
+      res.json(req.body);
+    } else {
+      res.status(401);
+      res.end('Unauthorized!');
+    }
+  })
+
+  router.get('/more/A', (req, res) => {
+    res.end('A');
+  })
+
+  router.get('/more/B', (req, res) => {
+    res.end('B');
+  })
 }

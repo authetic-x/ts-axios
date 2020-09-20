@@ -4,6 +4,37 @@ import NProgress from 'nprogress';
 
 const instance = axios.create();
 
+/* instance.post('/more/post', {
+  a: 1,
+},{
+  auth: {
+    username: 'Ethan',
+    password: '123456',
+  }
+})
+
+instance.post('/more/post', {}, {
+  auth: {
+    username: 'dedede',
+    password: 'ddedede'
+  }
+}) */
+
+function getA() {
+  return instance.get('/more/A');
+}
+
+function getB() {
+  return instance.get('/more/B');
+}
+
+axios.all([getA(), getB()]).then(
+  axios.spread((a, b) => {
+    console.log(a.data);
+    console.log(b.data);
+  })
+)
+
 function calculateProgress(loaded: number, total: number) {
   return Math.floor(loaded * 1.0) / total;
 }
